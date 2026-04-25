@@ -23,13 +23,13 @@ public class Product {
     private String image;
     private String description;
 
-    private int quantity;
+    private Integer quantity;
 
-    @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal price;
 
-    @Column(precision = 10, scale = 2)
-    private BigDecimal specialPrice;
+    private double price;
+
+
+    private Integer specialPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")

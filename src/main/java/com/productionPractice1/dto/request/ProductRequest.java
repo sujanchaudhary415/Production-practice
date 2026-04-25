@@ -1,9 +1,6 @@
 package com.productionPractice1.dto.request;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +17,12 @@ public class ProductRequest {
 
     private String description;
 
+
+    private Integer quantity;
+
+
     @NotNull(message ="price must not be blank")
     @Positive
     private double price;
+    private Integer specialPrice;
 }
