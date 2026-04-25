@@ -30,7 +30,7 @@ public class CategoryController {
     @GetMapping
     public ResponseEntity<ApiResponse<PagedResponse<CategoryResponse>>> getAllCategory(@RequestParam (defaultValue = "0")int pageNumber,
                                                                                    @RequestParam (defaultValue = "5")int pageSize,
-                                                                                   @RequestParam (defaultValue = "id")String sortBy,
+                                                                                   @RequestParam (defaultValue = "categoryId")String sortBy,
                                                                                    @RequestParam (defaultValue = "asc")String sortDir)
 
     {
@@ -39,22 +39,22 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(response,"Category fetched successfully"));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<CategoryResponse>>getCategoryById(@PathVariable Long id)
+    @GetMapping("/{categoryId}")
+    public ResponseEntity<ApiResponse<CategoryResponse>>getCategoryById(@PathVariable Long categoryId)
     {
-        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(categoryServiceImpl.getCategoryById(id),"Category fetched"));
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(categoryServiceImpl.getCategoryById(categoryId),"Category fetched"));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<CategoryResponse>>updateCategoryById(@PathVariable Long id,@Valid @RequestBody CategoryRequest request)
+    @PutMapping("/{categoryId}")
+    public ResponseEntity<ApiResponse<CategoryResponse>>updateCategoryById(@PathVariable Long categoryId,@Valid @RequestBody CategoryRequest request)
     {
-        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(categoryServiceImpl.updateCategoryById(id,request),"Category updated"));
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(categoryServiceImpl.updateCategoryById(categoryId,request),"Category updated"));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>>deleteCategoryById(@PathVariable Long id)
+    @DeleteMapping("/{categoryId}")
+    public ResponseEntity<ApiResponse<Void>>deleteCategoryById(@PathVariable Long categoryId)
     {
-        categoryServiceImpl.deleteCategoryById(id);
+        categoryServiceImpl.deleteCategoryById(categoryId);
         return ResponseEntity.ok(ApiResponse.success(null, "Category deleted"));
     }
 }

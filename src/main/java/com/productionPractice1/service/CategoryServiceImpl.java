@@ -15,7 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
+
 
 import java.util.List;
 
@@ -58,23 +58,23 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public CategoryResponse getCategoryById(Long id) {
-        Category category=categoryRepo.findById(id).orElseThrow(()->new ResourceNotFoundException("Category","categoryId",id));
+    public CategoryResponse getCategoryById(Long categoryId) {
+        Category category=categoryRepo.findById(categoryId).orElseThrow(()->new ResourceNotFoundException("Category","categoryId",categoryId));
         return modelMapper.map(category, CategoryResponse.class);
     }
 
     @Override
     @Transactional
-    public CategoryResponse updateCategoryById(Long id, CategoryRequest request) {
-        Category category=categoryRepo.findById(id).orElseThrow(()->new ResourceNotFoundException("Category","categoryId",id));
+    public CategoryResponse updateCategoryById(Long categoryId, CategoryRequest request) {
+        Category category=categoryRepo.findById(categoryId).orElseThrow(()->new ResourceNotFoundException("Category","categoryId",categoryId));
         category.setCategoryName(request.getCategoryName());
         return modelMapper.map(category, CategoryResponse.class);
     }
 
     @Override
     @Transactional
-    public void deleteCategoryById(Long id) {
-        Category category=categoryRepo.findById(id).orElseThrow(()->new ResourceNotFoundException("Category","categoryId",id));
+    public void deleteCategoryById(Long categoryId) {
+        Category category=categoryRepo.findById(categoryId).orElseThrow(()->new ResourceNotFoundException("Category","categoryId",categoryId));
         categoryRepo.delete(category);
 
     }
