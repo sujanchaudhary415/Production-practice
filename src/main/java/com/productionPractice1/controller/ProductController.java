@@ -4,7 +4,7 @@ package com.productionPractice1.controller;
 
 import com.productionPractice1.dto.request.ProductRequest;
 import com.productionPractice1.dto.response.ProductResponse;
-import com.productionPractice1.service.ProductServiceImpl;
+import com.productionPractice1.service.ProductService;
 import com.productionPractice1.wrapper.ApiResponse;
 import com.productionPractice1.wrapper.PagedResponse;
 import jakarta.validation.Valid;
@@ -16,17 +16,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class ProductController {
 
-    private final ProductServiceImpl productServiceImpl;
+    private final ProductService productService;
 
-    public ProductController(ProductServiceImpl productServiceImpl)
+    public ProductController(ProductService productService)
     {
-        this.productServiceImpl=productServiceImpl;
+        this.productService=productService;
     }
 
     @PostMapping("/admin/categories/{categoryId}/product")
     public ResponseEntity<ApiResponse<ProductResponse>> createProduct(@Valid @RequestBody ProductRequest request, @PathVariable Long categoryId)
     {
-        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(productServiceImpl.createProduct(request,categoryId),"Product Created"));
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(productService.createProduct(request,categoryId),"Product Created"));
     }
 
     @GetMapping("/public/products")
@@ -36,7 +36,7 @@ public class ProductController {
                                                                                     @RequestParam (defaultValue = "asc")String sortDir
                                                                       )
     {
-        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(productServiceImpl.getAllProduct(pageNumber, pageSize, sortBy, sortDir),"All product fetched Successfully"));
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(productService.getAllProduct(pageNumber, pageSize, sortBy, sortDir),"All product fetched Successfully"));
     }
 
     @GetMapping("/public/categories/{categoryId}/products")
@@ -45,12 +45,12 @@ public class ProductController {
                                                                                             @RequestParam (defaultValue ="productId" ) String sortBy,
                                                                                             @RequestParam (defaultValue = "asc")String sortDir)
     {
-        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(productServiceImpl.getProductsByCategory(categoryId,pageNumber,pageSize,sortBy,sortDir),"Products by category fetched Successfully"));
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(productService.getProductsByCategory(categoryId,pageNumber,pageSize,sortBy,sortDir),"Products by category fetched Successfully"));
     }
 
     @PutMapping("/products/{productId}")
-    public ResponseEntity<ApiResponse<ProductResponse>> updateProduct(@PathVariable Long productId,@RequestBody ProductRequest request)
+    public ResponseEntity<ApiResponse<ProductResponse>> updateProduct( @PathVariable Long productId,@Valid @RequestBody ProductRequest request)
     {
-        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(productServiceImpl.updateProduct(productId,request),"Product updated Successfully"));
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(productService.updateProduct(productId,request),"Product updated Successfully"));
     }
 }
